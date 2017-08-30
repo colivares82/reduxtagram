@@ -1,12 +1,21 @@
 // A reducer takes in two things:
 
 // 1- The Action (info about what happened)
-
 // 2- copy of current state
 
 let posts = (state = [], action) => {
-  console.log(state, action);
-  return state;
+  switch(action.type) {
+    case 'INCREMENT_LIKES' :
+      const i = action.index;
+      // We need to return the whole posts object but modifying only one
+      return [
+        ...state.slice(0,i), // before the one we are updating
+        {...state[i], likes: state[i].likes + 1},
+        ...state.slice(i + 1), // after the one we are updating
+      ];
+    default:
+      return state;
+  }
 }
 
 export default posts;
